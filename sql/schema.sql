@@ -1,8 +1,3 @@
-DROP TABLE IF EXISTS movimento;
-DROP TABLE IF EXISTS cartao;
-DROP TABLE IF EXISTS conta;
-DROP TABLE IF EXISTS associado;
-
 CREATE TABLE associado (
   id INT PRIMARY KEY,
   nome VARCHAR(100),
