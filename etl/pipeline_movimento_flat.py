@@ -92,7 +92,7 @@ def main():
     write_single_csv(movimento_flat, OUTPUT_DIR, FINAL_CSV_NAME)
 
     spark.stop()
-    print(f"✅ Gerado: {os.path.join(OUTPUT_DIR, FINAL_CSV_NAME)}")
+    print(f"Gerado: {os.path.join(OUTPUT_DIR, FINAL_CSV_NAME)}")
 
 
 if __name__ == "__main__":
