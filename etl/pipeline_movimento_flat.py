@@ -26,10 +26,7 @@ def read_table(spark: SparkSession, table: str):
 
 
 def write_single_csv(df, output_dir: str, final_name: str):
-    """
-    Spark escreve CSV como pasta com part-*.csv.
-    Aqui: coalesce(1) + rename para ficar exatamente output/movimento_flat.csv
-    """
+
     tmp_dir = os.path.join(output_dir, "_tmp_movimento_flat")
 
     # Limpa diretórios anteriores
@@ -49,14 +46,11 @@ def write_single_csv(df, output_dir: str, final_name: str):
 
     final_path = os.path.join(output_dir, final_name)
 
-    # Remove arquivo final antigo, se existir
     if os.path.exists(final_path):
         os.remove(final_path)
 
-    # Move part para nome final
     shutil.move(part_files[0], final_path)
 
-    # Limpa lixo (_SUCCESS, crc etc.)
     shutil.rmtree(tmp_dir, ignore_errors=True)
 
 
