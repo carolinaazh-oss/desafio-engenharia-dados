@@ -65,7 +65,7 @@ def main():
              .appName("etl-movimento-flat")
              .getOrCreate())
 
-    # Leitura (distribuída) do Postgres
+    # Leitura do Postgres
     associado = read_table(spark, "associado").alias("a")
     conta     = read_table(spark, "conta").alias("ct")
     cartao    = read_table(spark, "cartao").alias("c")
@@ -77,7 +77,7 @@ def main():
               .join(conta, col("c.id_conta") == col("ct.id"), "inner")
               .join(associado, col("c.id_associado") == col("a.id"), "inner"))
 
-    # Dataset final (ajuste os nomes para o “flat”)
+    # Dataset final
     movimento_flat = (joined.select(
         col("a.nome").cast("string").alias("nome_associado"),
         col("a.sobrenome").cast("string").alias("sobrenome_associado"),
@@ -94,7 +94,7 @@ def main():
         date_format(col("ct.data_criacao"), "yyyy-MM-dd HH:mm:ss").alias("data_criacao_conta"),
     ))
 
-    # Escrita em CSV único
+    # Escrita em CSV 
     write_single_csv(movimento_flat, OUTPUT_DIR, FINAL_CSV_NAME)
 
     spark.stop()
