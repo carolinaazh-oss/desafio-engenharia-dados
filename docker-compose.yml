@@ -1,10 +1,17 @@
 services:
   postgres:
     image: postgres:16
-    container_name: postgres_sicooperative
+    container_name: desafio-postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: sicooperative
+      POSTGRES_DB: desafio
+      POSTGRES_USER: desafio
+      POSTGRES_PASSWORD: desafio
     ports:
       - "5432:5432"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U desafio -d desafio"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
